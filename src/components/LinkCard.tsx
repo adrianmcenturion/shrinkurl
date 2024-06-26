@@ -26,7 +26,7 @@ export interface LinkProps {
 }
 
 function LinkCard({alias, id, short_url, target, visit_count}: LinkProps) {
-  const fullUrl = new URL(short_url, process.env.NEXT_PUBLIC_URL).toString();
+  const fullUrl = `${process.env.NEXT_PUBLIC_URL!}${short_url}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(fullUrl);
@@ -46,7 +46,7 @@ function LinkCard({alias, id, short_url, target, visit_count}: LinkProps) {
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-between gap-3 md:flex-row">
         <CardDescription className="flex flex-col items-center gap-3 text-lg md:flex-row">
-          <Link href={fullUrl} target="_blank">
+          <Link href={short_url} target="_blank">
             {fullUrl}
           </Link>
           <Button size="sm" onClick={copyToClipboard}>
