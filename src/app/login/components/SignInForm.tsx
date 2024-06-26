@@ -33,27 +33,28 @@ export default function SignInForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    // startTransition(async () => {
-    const result = await SignInWithEmailAndPassword(data);
+    startTransition(async () => {
+      const result = await SignInWithEmailAndPassword(data);
 
-    const {error} = result;
+      const {error} = result;
 
-    if (error?.message) {
-      toast({
-        variant: "destructive",
-        title: "You submitted the following values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{error.message}</code>
-          </pre>
-        ),
-      });
-    } else {
-      toast({
-        title: "Inicio de sesión exitoso!",
-      });
-    }
-    // });
+      if (error?.message) {
+        toast({
+          variant: "destructive",
+          title: "You submitted the following values:",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{error.message}</code>
+            </pre>
+          ),
+        });
+      } else {
+        toast({
+          title: "Inicio de sesión exitoso!",
+          duration: 750,
+        });
+      }
+    });
   }
 
   return (

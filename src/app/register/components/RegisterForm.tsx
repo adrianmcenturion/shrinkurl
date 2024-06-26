@@ -41,26 +41,28 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const result = await SignUpWithEmailAndPassword(data);
+    startTransition(async () => {
+      const result = await SignUpWithEmailAndPassword(data);
 
-    const {error} = JSON.parse(result);
+      const {error} = result;
 
-    if (error?.message) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{error?.message}</code>
-          </pre>
-        ),
-      });
-    } else {
-      toast({
-        title: "Registro con exito",
-      });
-      // redirect(publicPaths.login);
-    }
+      if (error?.message) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{error.message}</code>
+            </pre>
+          ),
+        });
+      } else {
+        toast({
+          title: "Registro con exito",
+        });
+        redirect(publicPaths.login);
+      }
+    });
   }
 
   return (

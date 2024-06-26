@@ -8,8 +8,6 @@ import Login from "./components/Login";
 export default async function page() {
   const {data} = await readUserSession();
 
-  console.log(data);
-
   if (data.session) {
     return redirect(privatePaths.dashboard);
   }

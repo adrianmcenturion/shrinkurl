@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 "use server";
 
 import {createServerClient, type CookieOptions} from "@supabase/ssr";

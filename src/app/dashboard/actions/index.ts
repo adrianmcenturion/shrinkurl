@@ -46,9 +46,9 @@ export async function readLinks() {
   return await supabase.from("shrinkurl").select("*");
 }
 
-export async function updateLinks() {
-  const supabase = await createSupabaseServerClient();
-}
+// export async function updateLinks() {
+//   const supabase = await createSupabaseServerClient();
+// }
 
 export async function deleteLinksByID(id: number) {
   const supabase = await createSupabaseServerClient();
@@ -56,8 +56,6 @@ export async function deleteLinksByID(id: number) {
   const {error} = await supabase.from("shrinkurl").delete().eq("id", id);
 
   revalidatePath("/dashboard");
-
-  console.log("error borrando links", error);
 
   return {error};
 }

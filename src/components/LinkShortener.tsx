@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 
-import {AiOutlineLoading3Quarters} from "react-icons/ai";
+// import {AiOutlineLoading3Quarters} from "react-icons/ai";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
 import {useState} from "react";
 import Link from "next/link";
 
-import {cn} from "@/lib/utils";
+// import {cn} from "@/lib/utils";
 import {toast} from "@/components/ui/use-toast";
-import {createAnonLink, readAnonLinks} from "@/app/actions";
+import {createAnonLink} from "@/app/actions";
 
 import {Button} from "./ui/button";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "./ui/form";
+import {Form, FormControl, FormField, FormItem, FormMessage} from "./ui/form";
 import {Input} from "./ui/input";
 
 const FormSchema = z.object({
@@ -33,8 +36,6 @@ function LinkShortener() {
     // startTransition(async () => {
     const result = await createAnonLink(data);
 
-    console.log("data anon", data);
-
     const {data: resp, error} = result;
 
     if (error?.message) {
@@ -54,8 +55,7 @@ function LinkShortener() {
       });
       form.reset();
 
-      console.log("resp", resp);
-      const newLink = {
+      const newLink: {target: string; short_url: string} = {
         target: `${process.env.NEXT_PUBLIC_URL}${resp![0].target}`,
         short_url: resp![0].short_url,
       };
