@@ -26,7 +26,7 @@ export interface LinkProps {
 }
 
 function LinkCard({alias, id, short_url, target, visit_count}: LinkProps) {
-  const fullUrl = `${process.env.NEXT_PUBLIC_URL!}${short_url}`;
+  const fullUrl = new URL(short_url, process.env.NEXT_PUBLIC_URL).toString();
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(fullUrl);
