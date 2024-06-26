@@ -22,10 +22,7 @@ interface RouteProps {
   params: {slug: string};
 }
 
-// Exporting an async GET function that takes the params object in the second argument
-export const GET = async (_, {params}: RouteProps) => {
-  // Making a SQL query to select a link from the links table where the alias matches the provided slug
-  // The result is limited to 1 row
+export const GET = async (_: unknown, {params}: RouteProps) => {
   const resp: PostgrestSingleResponse<Links[]> = await readLinks();
 
   const supabase = await createSupabaseServerClient();
