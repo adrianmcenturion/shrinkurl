@@ -6,7 +6,7 @@ import {revalidatePath} from "next/cache";
 import createSupabaseServerClient from "@/lib/supabase/server";
 
 interface LinkProps {
-  alias: string;
+  alias?: string;
   target: string;
   visit_count?: number;
   id?: number;
@@ -40,10 +40,38 @@ export async function createShortLink({alias, target}: LinkProps) {
   return {data, error};
 }
 
-export async function readLinks() {
+export async function createLinkAndGetIt({target}: LinkProps) {
   const supabase = await createSupabaseServerClient();
 
-  return await supabase.from("shrinkurl").select("*");
+  const short_url = customAlphabet(urlAlphabet, 5)();
+
+  const formatUrl = (url: string): string => {
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      return `https://${url}`;
+    }
+
+    return url;
+  };
+
+  const newTarget = formatUrl(target);
+
+  const {data, error} = await supabase
+    .from("shrinkurl")
+    .insert({target: newTarget, short_url})
+    .select();
+
+  return {data, error};
+}
+
+export async function readLinks() {
+  const supabase = await createSupabaseServerClient();
+  const getUserId = await supabase.auth.getUser();
+
+  const res = getUserId.data.user?.id
+    ? supabase.from("shrinkurl").select("*").eq("created_by", getUserId.data.user.id)
+    : supabase.from("shrinkurl").select("*");
+
+  return await res;
 }
 
 // export async function updateLinks() {

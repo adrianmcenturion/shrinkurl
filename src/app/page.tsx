@@ -1,17 +1,11 @@
-import type {LinkProps} from "@/components/LinkCard";
-import type {PostgrestSingleResponse} from "@supabase/supabase-js";
-
 import {redirect} from "next/navigation";
 
 import LinkShortener from "@/components/LinkShortener";
 import readUserSession from "@/lib/actions";
 import {privatePaths} from "@/lib/utils";
 
-import {readAnonLinks} from "./actions";
-
 export default async function HomePage() {
   const {data} = await readUserSession();
-  const link: PostgrestSingleResponse<LinkProps[]> = await readAnonLinks();
 
   data.session ? redirect(privatePaths.dashboard) : null;
 
