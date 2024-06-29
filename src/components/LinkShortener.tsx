@@ -19,7 +19,7 @@ import {Form, FormControl, FormField, FormItem, FormMessage} from "./ui/form";
 import {Input} from "./ui/input";
 
 const FormSchema = z.object({
-  target: z.string(),
+  target: z.string().min(1, "Ingrese una url a acortar"),
 });
 
 function LinkShortener() {
@@ -68,17 +68,19 @@ function LinkShortener() {
 
   return (
     <Form {...form}>
-      <form
-        className="flex items-center justify-between gap-3 "
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <form className="flex w-full justify-center  " onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="target"
           render={({field}) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="target" {...field} onChange={field.onChange} />
+                <Input
+                  className="w-full"
+                  placeholder="Url a acortar"
+                  {...field}
+                  onChange={field.onChange}
+                />
               </FormControl>
 
               <FormMessage />
@@ -86,13 +88,17 @@ function LinkShortener() {
           )}
         />
 
-        <Button className="flex w-full gap-2" type="submit">
-          Acortar
+        <Button className="flex w-fit gap-2" type="submit">
+          Acortar url
           <AiOutlineLoading3Quarters className={cn("animate-spin", {hidden: !isPending})} />
         </Button>
       </form>
       {newLink ? (
-        <Link href={newLink.short_url} target="_blank">
+        <Link
+          className="text-center transition-all duration-700 ease-in animate-in"
+          href={newLink.short_url}
+          target="_blank"
+        >
           {newLink.short_url}
         </Link>
       ) : null}

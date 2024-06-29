@@ -21,7 +21,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   return (
     <html lang="en">
       <body>
-        <div className="dark container m-auto grid min-h-screen max-w-7xl grid-rows-[auto,1fr,auto] bg-background p-4 font-sans antialiased">
+        <div className=" container m-auto grid min-h-screen max-w-7xl grid-rows-[auto,1fr,auto] bg-background p-4 font-sans antialiased">
           <ThemeProvider
             disableTransitionOnChange
             enableSystem
@@ -29,7 +29,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             defaultTheme="system"
           >
             <header className="flex justify-between text-xl font-bold leading-[4rem]">
-              <Link href="/">
+              <Link className="md:text-3xl" href="/">
                 <span className="text-primary">S</span>hrink<span className="text-primary">U</span>
                 rl
               </Link>
