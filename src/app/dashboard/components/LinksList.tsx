@@ -6,7 +6,7 @@ import LinkCard from "@/components/LinkCard";
 import {DataTable} from "@/components/Table/data-table";
 import {columns} from "@/components/Table/columns";
 
-interface LinkListProps {
+export interface LinkListProps {
   error?: unknown;
   count?: number;
   status?: unknown;
