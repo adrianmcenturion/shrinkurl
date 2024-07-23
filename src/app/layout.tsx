@@ -49,7 +49,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                 <SwitchTheme />
               </div>
             </header>
-            <main className="mx-auto w-full py-8 md:max-w-3xl">{children}</main>
+            <main className="mx-auto w-full py-8 md:max-w-3xl lg:max-w-7xl">{children}</main>
             <footer className="text-center font-bold leading-[4rem]">
               © {new Date().getFullYear()} <span className="text-primary">S</span>hrink
               <span className="text-primary">U</span>rl

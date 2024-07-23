@@ -57,7 +57,10 @@ export default function CreateLinks() {
 
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="space-y-6 lg:flex lg:flex-row lg:items-end lg:justify-center"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="alias"
@@ -85,7 +88,7 @@ export default function CreateLinks() {
             </FormItem>
           )}
         />
-        <Button className="flex w-full gap-2" type="submit">
+        <Button className="flex w-full gap-2 lg:gap-0" type="submit">
           Enviar
           <AiOutlineLoading3Quarters className={cn("animate-spin", {hidden: !isPending})} />
         </Button>
