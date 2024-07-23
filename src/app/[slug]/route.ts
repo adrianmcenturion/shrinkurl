@@ -1,7 +1,6 @@
 import type {PostgrestSingleResponse} from "@supabase/supabase-js";
 
 import {NextResponse} from "next/server";
-import {revalidatePath} from "next/cache";
 
 import createSupabaseServerClient from "@/lib/supabase/server";
 
@@ -17,46 +16,54 @@ interface Links {
   short_url: string;
 }
 
-interface RouteProps {
-  _?: string;
-  params: {slug: string};
-}
+export const GET = async (request: Request) => {
+  const url = new URL(request.url);
+  const slug = url.pathname.split("/").pop();
 
-export const GET = async (_: unknown, {params}: RouteProps) => {
   const resp: PostgrestSingleResponse<Links[]> = await readLinks();
 
   const supabase = await createSupabaseServerClient();
 
-  const links = resp.data!.filter((r) => r.short_url === params.slug);
+  const links = resp.data!.filter((r) => r.short_url === slug);
 
   if (links.length === 0) {
-    return new Response(`<h1>/${links[0].short_url} is not in our record</h1>`, {
+    return new Response(`<h1>/${slug} is not in our record</h1>`, {
       status: 400,
       headers: {
         "content-type": "text/html",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
       },
     });
   }
 
-  if (links[0]) {
-    const update = async () => {
-      const {id} = links[0];
-      let {visit_count} = links[0];
+  const {id, visit_count, target} = links[0];
 
-      visit_count += 1;
+  // Actualizar el contador de visitas de forma síncrona antes de redirigir
+  const {error} = await supabase
+    .from("shrinkurl")
+    .update({visit_count: visit_count + 1})
+    .eq("id", id);
 
-      const {error} = await supabase
-        .from("shrinkurl")
-        .update({visit_count: visit_count})
-        .eq("id", id);
-
-      if (!error) revalidatePath("/dashboard");
-    };
-
-    update();
+  if (error) {
+    return new Response("<h1>Error updating visit count</h1>", {
+      status: 500,
+      headers: {
+        "content-type": "text/html",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
   }
 
-  revalidatePath("/dashboard");
-
-  return NextResponse.redirect(new URL(links[0].target), 302);
+  return NextResponse.redirect(new URL(target), {
+    status: 302,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 };
