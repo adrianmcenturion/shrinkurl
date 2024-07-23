@@ -40,7 +40,7 @@ export default function DeleteLinkButton({id}: DeleteProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="icon" variant="outline">
+        <Button size="sm" variant="outline">
           <Cross1Icon className="size[1.5rem]" />
           <span className="sr-only">Delete</span>
         </Button>
