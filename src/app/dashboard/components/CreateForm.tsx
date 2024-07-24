@@ -65,10 +65,16 @@ export default function CreateLinks() {
           control={form.control}
           name="alias"
           render={({field}) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Alias</FormLabel>
               <FormControl>
-                <Input placeholder="alias" {...field} type="alias" onChange={field.onChange} />
+                <Input
+                  className="lg:rounded-r-none lg:border-r-0"
+                  placeholder="alias"
+                  {...field}
+                  type="alias"
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -78,17 +84,23 @@ export default function CreateLinks() {
           control={form.control}
           name="target"
           render={({field}) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Target</FormLabel>
               <FormControl>
-                <Input placeholder="target" {...field} type="text" onChange={field.onChange} />
+                <Input
+                  className="lg:rounded-l-none lg:rounded-r-none"
+                  placeholder="target"
+                  {...field}
+                  type="text"
+                  onChange={field.onChange}
+                />
               </FormControl>
 
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button className="flex w-full gap-2 lg:gap-0" type="submit">
+        <Button className="flex w-full gap-2 lg:gap-0 lg:rounded-l-none" type="submit">
           Enviar
           <AiOutlineLoading3Quarters className={cn("animate-spin", {hidden: !isPending})} />
         </Button>

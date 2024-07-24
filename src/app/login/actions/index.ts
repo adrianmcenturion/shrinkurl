@@ -3,6 +3,7 @@
 import {redirect} from "next/navigation";
 
 import createSupabaseServerClient from "@/lib/supabase/server";
+import {publicPaths} from "@/lib/utils";
 
 export async function SignInWithEmailAndPassword(loginData: {email: string; password: string}) {
   const supabase = await createSupabaseServerClient();
@@ -21,5 +22,5 @@ export async function Logout() {
 
   await supabase.auth.signOut();
 
-  redirect("/");
+  redirect(publicPaths.home);
 }

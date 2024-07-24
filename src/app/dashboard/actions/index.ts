@@ -1,19 +1,12 @@
 "use server";
 
+import type {LinkProps} from "@/types";
+
 import {customAlphabet, urlAlphabet} from "nanoid";
 import {revalidatePath} from "next/cache";
 
 import createSupabaseServerClient from "@/lib/supabase/server";
-
-interface LinkProps {
-  alias?: string;
-  target: string;
-  visit_count?: number;
-  id?: number;
-  created_at?: Date;
-  created_by?: string;
-  short_url?: string;
-}
+import {privatePaths} from "@/lib/utils";
 
 export async function createShortLink({alias, target}: LinkProps) {
   const supabase = await createSupabaseServerClient();
@@ -35,7 +28,7 @@ export async function createShortLink({alias, target}: LinkProps) {
     .insert({alias, target: newTarget, short_url})
     .single();
 
-  revalidatePath("/dashboard");
+  revalidatePath(privatePaths.dashboard);
 
   return {data, error};
 }
@@ -83,7 +76,7 @@ export async function deleteLinksByID(id: number) {
 
   const {error} = await supabase.from("shrinkurl").delete().eq("id", id);
 
-  revalidatePath("/dashboard");
+  revalidatePath(privatePaths.dashboard);
 
   return {error};
 }

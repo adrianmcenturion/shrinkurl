@@ -1,5 +1,5 @@
 import type {PostgrestSingleResponse} from "@supabase/supabase-js";
-import type {Link} from "@/components/Table/columns";
+import type {LinkProps} from "@/types";
 
 import {redirect} from "next/navigation";
 
@@ -16,7 +16,7 @@ export default async function PrivatePage() {
   if (!data.session) {
     return redirect(publicPaths.home);
   }
-  const links: PostgrestSingleResponse<Link[]> = await readLinks();
+  const links: PostgrestSingleResponse<LinkProps[]> = await readLinks();
 
   return (
     <div className="flex w-full flex-col gap-6">

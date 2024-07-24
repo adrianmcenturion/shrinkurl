@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {toast} from "@/components/ui/use-toast";
+import {copyToClipboard, createUrl} from "@/lib/utils";
 
 import {AlertDialog} from "./ui/alert-dialog";
 import DeleteLinkButton from "./DeleteLinkButton";
@@ -26,15 +26,7 @@ export interface LinkProps {
 }
 
 function LinkCard({alias, id, short_url, target, visit_count}: LinkProps) {
-  const fullUrl = `${process.env.NEXT_PUBLIC_URL!}${short_url}`;
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(fullUrl);
-    toast({
-      title: "Copiado!",
-      duration: 750,
-    });
-  };
+  const fullUrl = createUrl(short_url);
 
   return (
     <Card key={id} className="mx-auto h-full max-h-60 w-full max-w-[350px] bg-transparent">
@@ -54,15 +46,15 @@ function LinkCard({alias, id, short_url, target, visit_count}: LinkProps) {
               className="dark:text-accent-foreground"
               size="sm"
               variant="ghost"
-              onClick={copyToClipboard}
+              onClick={() => copyToClipboard(fullUrl)}
             >
               <ClipboardCopyIcon />
               <span className="sr-only">Copy to clipboard</span>
             </Button>
-            <Button className="dark:text-accent-foreground" size="sm" variant="ghost">
+            {/* <Button className="dark:text-accent-foreground" size="sm" variant="ghost">
               <Link1Icon />
               <span className="sr-only">QR Code</span>
-            </Button>
+            </Button> */}
           </div>
         </CardDescription>
 

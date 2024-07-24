@@ -33,15 +33,15 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                 <span className="text-primary">S</span>hrink<span className="text-primary">U</span>
                 rl
               </Link>
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center justify-between gap-1 md:gap-3">
                 {data.session ? (
                   <SignOut />
                 ) : (
                   <>
-                    <Button>
+                    <Button size="sm">
                       <Link href="/register">Registrar</Link>
                     </Button>
-                    <Button>
+                    <Button size="sm">
                       <Link href="/login">Iniciar Sesión</Link>
                     </Button>
                   </>

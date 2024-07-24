@@ -21,12 +21,12 @@ export function SwitchTheme() {
   return (
     <>
       {isDarkTheme ? (
-        <Button size="icon" variant="outline" onClick={handleSetTheme}>
+        <Button size="sm" variant="outline" onClick={handleSetTheme}>
           <SunIcon className="size[1.5rem]" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       ) : (
-        <Button size="icon" variant="outline" onClick={handleSetTheme}>
+        <Button size="sm" variant="outline" onClick={handleSetTheme}>
           <MoonIcon className="size[1.5rem]" />
           <span className="sr-only">Toggle theme</span>
         </Button>

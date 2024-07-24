@@ -1,12 +1,17 @@
+"use server";
+
 import type {PostgrestSingleResponse} from "@supabase/supabase-js";
-import type {Link} from "@/components/Table/columns";
+import type {LinkProps} from "@/types";
+
+import {revalidatePath} from "next/cache";
 
 import createSupabaseServerClient from "@/lib/supabase/server";
+import {privatePaths} from "@/lib/utils";
 
 export const getShortUrl = async (slug: string) => {
   const supabase = await createSupabaseServerClient();
 
-  const {data, error}: PostgrestSingleResponse<Link> = await supabase
+  const {data, error}: PostgrestSingleResponse<LinkProps> = await supabase
     .from("shrinkurl")
     .select("*")
     .eq("short_url", slug)
@@ -34,4 +39,6 @@ export const increaseCountVisits = async (slug: string) => {
     .from("shrinkurl")
     .update({visit_count: shortUrl.visit_count + 1})
     .eq("id", shortUrl.id);
+
+  revalidatePath(privatePaths.dashboard);
 };

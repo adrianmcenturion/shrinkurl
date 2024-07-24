@@ -1,27 +1,19 @@
 "use client";
 
 import type {ColumnDef} from "@tanstack/react-table";
+import type {LinkProps} from "@/types";
 
 import Link from "next/link";
 import {ClipboardCopyIcon} from "@radix-ui/react-icons";
 import {ArrowUpDown} from "lucide-react";
 
+import {copyToClipboard, createUrl} from "@/lib/utils";
+
 import {AlertDialog} from "../ui/alert-dialog";
 import DeleteLinkButton from "../DeleteLinkButton";
-import {toast} from "../ui/use-toast";
 import {Button} from "../ui/button";
 
-export interface Link {
-  id: number;
-  short_url: string;
-  alias: string;
-  target: string;
-  qrCode: string;
-  visit_count: number;
-  created_at: Date;
-}
-
-export const columns: ColumnDef<Link>[] = [
+export const columns: ColumnDef<LinkProps>[] = [
   {
     accessorKey: "alias",
     header: "Alias",
@@ -37,33 +29,27 @@ export const columns: ColumnDef<Link>[] = [
         <div className="flex max-w-64 items-center justify-between">
           <Link
             className="font-semibold"
-            href={row.original.short_url}
+            href={row.original.short_url!}
             rel="noopener norelate"
             target="_blank"
-          >{`${process.env.NEXT_PUBLIC_URL}${row.original.short_url}`}</Link>
+          >
+            {createUrl(row.original.short_url!)}
+          </Link>
         </div>
       );
     },
   },
   {
-    id: "actions",
+    id: "copyButton",
     enableHiding: false,
     cell: ({row}) => {
-      const fullUrl = `${process.env.NEXT_PUBLIC_URL!}${row.original.short_url}`;
-
-      const copyToClipboard = () => {
-        navigator.clipboard.writeText(fullUrl);
-        toast({
-          title: "Copiado!",
-          duration: 750,
-        });
-      };
+      const fullUrl = createUrl(row.original.short_url!);
 
       return (
         <Button
           className="bg-transparent dark:text-accent-foreground"
           size="sm"
-          onClick={copyToClipboard}
+          onClick={() => copyToClipboard(fullUrl)}
         >
           <ClipboardCopyIcon />
           <span className="sr-only">Copy to clipboard</span>
@@ -71,10 +57,10 @@ export const columns: ColumnDef<Link>[] = [
       );
     },
   },
-  {
-    accessorKey: "qrCode",
-    header: "QR",
-  },
+  // {
+  //   accessorKey: "qrCode",
+  //   header: "QR",
+  // },
   {
     accessorKey: "target",
     header: "Link original",
@@ -110,18 +96,18 @@ export const columns: ColumnDef<Link>[] = [
       );
     },
     cell: ({row}) => {
-      const date = new Date(row.original.created_at).toLocaleDateString();
+      const date = new Date(row.original.created_at!).toLocaleDateString();
 
       return <div className="text-center">{date}</div>;
     },
   },
   {
-    id: "actions",
+    id: "deleteButton",
     enableHiding: false,
     cell: ({row}) => {
       return (
         <AlertDialog>
-          <DeleteLinkButton id={row.original.id} />
+          <DeleteLinkButton id={row.original.id!} />
         </AlertDialog>
       );
     },
