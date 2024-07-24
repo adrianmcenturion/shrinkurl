@@ -37,7 +37,7 @@ export const increaseCountVisits = async (slug: string) => {
 
   await supabase
     .from("shrinkurl")
-    .update({visit_count: shortUrl.visit_count + 1})
+    .update({visit_count: shortUrl.visit_count! + 1})
     .eq("id", shortUrl.id);
 
   revalidatePath(privatePaths.dashboard);
