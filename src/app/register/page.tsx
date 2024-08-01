@@ -4,7 +4,7 @@ import Register from "./components/Register";
 
 export default function page() {
   return (
-    <div className="h-full">
+    <div className="mx-auto mt-16 h-full max-w-md">
       <Register />
     </div>
   );

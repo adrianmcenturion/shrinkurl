@@ -28,7 +28,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             attribute="class"
             defaultTheme="system"
           >
-            <header className="flex justify-between text-xl font-bold leading-[4rem]">
+            <header className="flex justify-between text-2xl font-bold leading-[4rem]">
               <Link className="md:text-3xl" href="/">
                 <span className="text-primary">S</span>hrink<span className="text-primary">U</span>
                 rl
@@ -38,10 +38,10 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                   <SignOut />
                 ) : (
                   <>
-                    <Button size="sm">
+                    <Button size="custom">
                       <Link href="/register">Registrar</Link>
                     </Button>
-                    <Button size="sm">
+                    <Button size="custom">
                       <Link href="/login">Iniciar Sesión</Link>
                     </Button>
                   </>

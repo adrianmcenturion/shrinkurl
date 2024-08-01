@@ -13,7 +13,7 @@ export default async function page() {
   }
 
   return (
-    <div className="h-full">
+    <div className="mx-auto mt-16 h-full max-w-md">
       <Login />
     </div>
   );
