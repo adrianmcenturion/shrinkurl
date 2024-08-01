@@ -13,10 +13,8 @@ export default async function page() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="w-96">
-        <Login />
-      </div>
+    <div className="h-full">
+      <Login />
     </div>
   );
 }
