@@ -7,7 +7,7 @@ import {Button} from "./ui/button";
 export default function SignOut() {
   return (
     <form action={() => void Logout()} className="m-0 leading-none">
-      <Button size="default">Cerrar sesión</Button>
+      <Button size="custom">Cerrar sesión</Button>
     </form>
   );
 }
