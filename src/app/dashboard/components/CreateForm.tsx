@@ -70,7 +70,7 @@ export default function CreateLinks() {
               <FormControl>
                 <Input
                   className="lg:rounded-r-none lg:border-r-0"
-                  placeholder="alias"
+                  placeholder="Alias"
                   {...field}
                   type="alias"
                   onChange={field.onChange}
@@ -85,11 +85,11 @@ export default function CreateLinks() {
           name="target"
           render={({field}) => (
             <FormItem className="w-full">
-              <FormLabel>Target</FormLabel>
+              <FormLabel>Link Original</FormLabel>
               <FormControl>
                 <Input
                   className="lg:rounded-l-none lg:rounded-r-none"
-                  placeholder="target"
+                  placeholder="Link original"
                   {...field}
                   type="text"
                   onChange={field.onChange}
